@@ -1,0 +1,159 @@
+<head>
+  <script src="/jquery.tablesort.min.js"></script>
+</head>
+
+<div class="limited">
+  <br /><br />
+  <center>
+    <form class="ui form" style="margin:">
+      <div class="ui icon input" style="width: 100%; max-width: 600px;">
+        <input class="prompt" type="text" placeholder="Try searching for <%= @search_suggestions[rand(0...@search_suggestions.count)] %>" name="query">
+        <i class="search icon"></i>
+      </div>
+    </form>
+  </center>
+  <br /><br />
+
+  <% if !params[:query].blank? && !@instructors.blank? %>
+  <div class="ui info message">
+    Showing all results  for <%= params[:query] %> (<%= @instructors.count %>)
+  </div>
+  <% end %>
+
+  <% if !@min_range_instructor.blank? && !@max_range_instructor.blank? %>
+  <div class="ui three cards">
+    <div class="card">
+      <div class="content">
+        <div class="header">
+          Range
+        </div>
+      </div>
+      <div class="content">
+        Min: <%= @min_range_instructor.range %>%
+      </div>
+      <div class="content">
+        Max: <%= @max_range_instructor.range %>%
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <div class="header">
+          Most As
+          <span class="right floated">
+            <% 4.times do %>
+              <i class="tiny circle icon"></i>
+            <% end %>
+            <i class="tiny circle icon"></i>
+          </span>
+        </div>
+      </div>
+      <div class="content">
+        <%= @max_range_instructor.name %> (<%= @max_range_instructor.range %>%)
+      </div>
+      <div class="content">
+        <%= @max_range_instructor.course.upcase %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <div class="header">
+          Least As
+          <span class="right floated">
+            <i class="tiny circle icon"></i>
+            <% 4.times do %>
+              <i class="tiny thin circle icon"></i>
+            <% end %>
+          </span>
+        </div>
+      </div>
+      <div class="content">
+        <%= @min_range_instructor.name %> (<%= @min_range_instructor.range %>%)
+      </div>
+      <div class="content">
+        <%= @min_range_instructor.course.upcase %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <% if !params[:query].blank? && params[:query].length < 3 %>
+  <center>
+    <div class="ui warning red message" style="width: 100%; max-width: 600px;">
+      <i class="warning icon large"></i> Please enter 3 or more characters
+    </div>
+  </center>
+  <% end %>
+
+  <br />
+
+  <% if !params[:query].blank? && !@instructors.blank? %>
+    <table class="ui celled striped teal table">
+      <thead>
+        <tr>
+          <th>Instructor </th>
+          <th>Course </th>
+          <th class="default-sort">A-range </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @instructors.each do |instructor| %>
+          <tr>
+            <td><%= instructor.name %></td>
+            <td><%= instructor.course.upcase %></td>
+            <td data-sort-value="<%= instructor.range.to_i %>"><%= instructor.range %>%</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% if !@instructors_chart.blank? %>
+  <div class="ui segment inverted">
+    <br />
+    <center><h3>A-Range Distribution</h3></center>
+    <br />
+    <!-- <div class="ui blue message">for <strong><%= params[:query] %></strong></div> -->
+    <%= column_chart [
+        {name: "A Range", data: @instructors_chart},
+      ], library: {backgroundColor: "none",
+          vAxis: {
+            title: "# of Instructors with this A-range",
+            titleTextStyle: {color: '#666666'},
+            gridlines: {color: '#333', count: 4}
+          },
+          hAxis: {
+            title: "% of class that receives an A",
+            titleTextStyle: {color: '#666666'},
+          },
+          series: [
+            {visibleInLegend: false}
+          ],
+          pointSize: 0.0,
+          lineWidth: 2.0,
+          colors: ['#66CC00'],
+          discrete: true
+        }
+    %>
+    <br />
+  </div>
+  <% end %>
+  <br /><br /><br />
+  <center>
+    <p style="color: #BBB">Data courtesy of <em>gradesatcu.com</em></p>
+  </center>
+
+  <script>
+    $.tablesort.defaults = {
+      debug: $.tablesort.DEBUG,   // Outputs some basic debug info when true.
+      asc: 'sorted ascending',    // CSS classes added to `<th>` elements on sort.
+      desc: 'sorted descending'
+    };
+    $(document).ready(function() {
+      $('.table').tablesort().data('tablesort').sort($("th.default-sort"));
+    });
+  </script>
+
+</div>

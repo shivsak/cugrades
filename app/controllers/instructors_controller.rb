@@ -1,16 +1,16 @@
 class InstructorsController < ApplicationController
-  before_action :set_instructor, only: [:show, :edit, :update, :destroy]
 
   # GET /instructors
   # GET /instructors.json
   def index
-    @instructors = Instructor.all
+    # @instructors = Instructor.all
+    redirect_to search_instructors_path
   end
 
   # GET /instructors/1
   # GET /instructors/1.json
-  def show
-  end
+  # def show
+  # end
 
   # GET /instructors/new
   def new
@@ -18,8 +18,8 @@ class InstructorsController < ApplicationController
   end
 
   # GET /instructors/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /instructors
   # POST /instructors.json
@@ -53,12 +53,28 @@ class InstructorsController < ApplicationController
 
   # DELETE /instructors/1
   # DELETE /instructors/1.json
-  def destroy
-    @instructor.destroy
-    respond_to do |format|
-      format.html { redirect_to instructors_url, notice: 'Instructor was successfully destroyed.' }
-      format.json { head :no_content }
+  # def destroy
+  #   @instructor.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to instructors_url, notice: 'Instructor was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def search
+
+    @search_suggestions = ["HUMA", "Cannon", "COCI", "4065"]
+
+    if !params[:query].blank? && params[:query].length >= 3
+      @instructors = Instructor.where('name ILIKE ? OR course ILIKE ?', "%#{params[:query]}%", "%#{params[:query]}%")
+      @min_range_instructor = @instructors.order(:range).first
+      @max_range_instructor = @instructors.order(:range).last
+      @instructors_chart = @instructors.group(:range).count
     end
+    # If all instructors have same uname, give a range on top of the table
+    # @grouped_instructors = @instructors.group(:uname).count
+
+    # End
   end
 
   private

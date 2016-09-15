@@ -13,3 +13,26 @@
  *= require_tree .
  *= require_self
  */
+
+@import "semantic-ui";
+
+body {
+  font-family: 'Lato', Helvetica;
+}
+
+.container {
+	margin: 0px auto;
+	border: 0px solid red;
+}
+
+.limited {
+	margin: 20px auto 0px auto;
+	width: 90%;
+	border: 0px solid blue;
+	padding: 0px;
+}
+
+.very-limited {
+  width: 90%;
+  max-width: 600px;
+}

@@ -1,31 +1,26 @@
-<p id="notice"><%= notice %></p>
+<div class="limited">
+  <br /><br />
 
-<h1>Listing Instructors</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Course</th>
-      <th>Range</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @instructors.each do |instructor| %>
+  <table class="ui celled striped teal table">
+    <thead>
       <tr>
-        <td><%= instructor.name %></td>
-        <td><%= instructor.course %></td>
-        <td><%= instructor.range %></td>
-        <td><%= link_to 'Show', instructor %></td>
-        <td><%= link_to 'Edit', edit_instructor_path(instructor) %></td>
-        <td><%= link_to 'Destroy', instructor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Instructor</th>
+        <th>Course</th>
+        <th>A-range</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @instructors.each do |instructor| %>
+        <tr>
+          <td><%= instructor.name %></td>
+          <td><%= instructor.course %></td>
+          <td><%= instructor.range %>%</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Instructor', new_instructor_path %>
+  <br>
+
+</div>

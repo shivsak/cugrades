@@ -1,0 +1,7 @@
+th.sorted.ascending:after {
+    content: "\25B4";
+}
+
+th.sorted.descending:after {
+    content: "\25BE";
+}

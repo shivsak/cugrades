@@ -1,4 +1,4 @@
-<%= form_for(@instructor) do |f| %>
+<%= form_for @instructor, :html => {:class => "ui form"} do |f| %>
   <% if @instructor.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@instructor.errors.count, "error") %> prohibited this instructor from being saved:</h2>
@@ -12,18 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.label :name, "Instructor Name" %>
+    <%= f.text_field :name, placeholder: "Adam Cannon" %>
   </div>
+  <br />
   <div class="field">
-    <%= f.label :course %><br>
-    <%= f.text_field :course %>
+    <%= f.label :course %>
+    <%= f.text_field :course, placeholder: "COMS 1004" %>
   </div>
+  <br />
   <div class="field">
-    <%= f.label :range %><br>
-    <%= f.number_field :range %>
+    <%= f.label :range, "A-Range %" %>
+    <%= f.number_field :range, placeholder: "32" %>
   </div>
+  <br />
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "ui button green" %>
+    <%= link_to 'Back', instructors_path, class: "ui button" %>
   </div>
 <% end %>

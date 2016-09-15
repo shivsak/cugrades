@@ -3,15 +3,23 @@
 <head>
   <title>Cugrades</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "https://www.google.com/jsapi" %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    
+
 </head>
 <body>
+  <div class="ui horizontal menu navbar">
+    <div class="left menu">
+      <%= link_to new_instructor_path, class: "item" do %>
+          <i class="icon add"></i> New Instructor
+      <% end %>
+    </div>
+  </div>
 
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>
