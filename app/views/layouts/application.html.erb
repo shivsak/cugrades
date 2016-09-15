@@ -11,12 +11,16 @@
 
 </head>
 <body>
-  <div class="ui horizontal menu navbar">
-    <div class="left menu">
+  <div class="ui horizontal inverted menu navbar" style="background: #66CC00">
+      <%= link_to :back, class: "item" do %>
+          <i class="icon arrow left"></i> Back
+      <% end %>
       <%= link_to new_instructor_path, class: "item" do %>
           <i class="icon add"></i> New Instructor
       <% end %>
-    </div>
+      <%= link_to about_path, class: "item right floated" do %>
+          <i class="icon info"></i> About
+      <% end %>
   </div>
 
   <%= yield %>

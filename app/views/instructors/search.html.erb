@@ -3,7 +3,14 @@
 </head>
 
 <div class="limited">
-  <br /><br />
+  <center>
+    <% if params[:query].blank? %>
+      <h1 style="font-family: 'HelveticaNeue-CondensedBold'; font-size: 60px">CU GRADES</h1>
+    <% else %>
+      <h1 style="font-family: 'HelveticaNeue-CondensedBold'; font-size: 30px">CU GRADES</h1>
+    <% end %>
+  </center>
+  <br />
   <center>
     <form class="ui form" style="margin:">
       <div class="ui icon input" style="width: 100%; max-width: 600px;">
@@ -141,9 +148,10 @@
   </div>
   <% end %>
   <br /><br /><br />
-  <center>
-    <p style="color: #BBB">Data courtesy of <em>gradesatcu.com</em></p>
-  </center>
+
+  <% !if params[:query].blank? %>
+    <p style="width: 100%; text-align: center; bottom: 12px; color: #555"><em>Initial data courtesy of <a href="http://gradesatcu.com" style="text-decoration: none;">gradesatcu.com</a></em></p>
+  <% end %>
 
   <script>
     $.tablesort.defaults = {
