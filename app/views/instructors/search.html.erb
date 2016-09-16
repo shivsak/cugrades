@@ -27,19 +27,19 @@
   </div>
   <% end %>
 
-  <% if !@min_range_instructor.blank? && !@max_range_instructor.blank? %>
+  <% if !@min_range_instructor.blank? && !@max_range_instructor.blank? && !@instructors_avg.blank? %>
   <div class="ui three cards">
     <div class="card">
       <div class="content">
         <div class="header">
-          Range
+          Stats
         </div>
       </div>
       <div class="content">
-        Min: <%= @min_range_instructor.range %>%
+        Average: <%= @instructors_avg %>%
       </div>
       <div class="content">
-        Max: <%= @max_range_instructor.range %>%
+        Range: <%= @min_range_instructor.range %>% - <%= @max_range_instructor.range %>%
       </div>
     </div>
 

@@ -70,6 +70,7 @@ class InstructorsController < ApplicationController
       @min_range_instructor = @instructors.order(:range).first
       @max_range_instructor = @instructors.order(:range).last
       @instructors_chart = @instructors.group(:range).count
+      @instructors_avg = @instructors.average(:range).round(2)
     end
     # If all instructors have same uname, give a range on top of the table
     # @grouped_instructors = @instructors.group(:uname).count

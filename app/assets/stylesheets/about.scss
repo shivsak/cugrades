@@ -12,13 +12,20 @@
 
 .text-div h1, .text-div h2 {
 	font-family: "Lato", "Helvetica Neue", Helvetica;
-	font-size: 22pt;
 	margin-top: 0px;
 	font-weight: 100;
 	color: rgba(45, 45 ,45, 1);
   border-left: 0px solid rgba(250, 100, 0, 1);
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+}
+
+.text-div h1 {
+  font-size: 22pt;
+}
+
+.text-div h2 {
+  font-size: 16pt;
 }
 
 .text-div p, .text-div li {
