@@ -67,10 +67,12 @@ class InstructorsController < ApplicationController
 
     if !params[:query].blank? && params[:query].length >= 3
       @instructors = Instructor.where('name ILIKE ? OR course ILIKE ?', "%#{params[:query]}%", "%#{params[:query]}%")
-      @min_range_instructor = @instructors.order(:range).first
-      @max_range_instructor = @instructors.order(:range).last
-      @instructors_chart = @instructors.group(:range).count
-      @instructors_avg = @instructors.average(:range).round(2)
+      if !@instructors.blank?
+        @min_range_instructor = @instructors.order(:range).first
+        @max_range_instructor = @instructors.order(:range).last
+        @instructors_chart = @instructors.group(:range).count
+        @instructors_avg = @instructors.average(:range).round(2)
+      end
     end
     # If all instructors have same uname, give a range on top of the table
     # @grouped_instructors = @instructors.group(:uname).count
