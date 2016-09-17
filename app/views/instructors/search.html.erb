@@ -27,6 +27,12 @@
   </div>
   <% end %>
 
+  <% if !params[:query].blank? && @instructors.blank? %>
+  <div class="ui info message">
+    No results found for <%= params[:query] %>
+  </div>
+  <% end %>
+
   <% if !@min_range_instructor.blank? && !@max_range_instructor.blank? && !@instructors_avg.blank? %>
   <div class="ui three cards">
     <div class="card">
