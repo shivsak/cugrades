@@ -29,7 +29,7 @@
 
   <% if !params[:query].blank? && @instructors.blank? %>
   <div class="ui info message">
-    No results found for <%= params[:query] %>
+    No grade ranges found for <%= params[:query] %> <i class="em em-neutral_face"></i>
   </div>
   <% end %>
 
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="content">
-        Average: <%= @instructors_avg %>%
+        Average A-Range: <%= @instructors_avg %>%
       </div>
       <div class="content">
         Range: <%= @min_range_instructor.range %>% - <%= @max_range_instructor.range %>%
@@ -99,7 +99,40 @@
   </center>
   <% end %>
 
-  <br />
+
+  <div class="ui segment">
+    <!-- <%= @culpa_reviews.to_json %> -->
+    <h2>Professors on CULPA
+      <span style="font-size: 16px; font-weight: 300; color: #888"> &nbsp; matching <%= params[:query] %></span>
+    </h2>
+    <% if !@culpa_search_profs.blank? %>
+      <% @culpa_search_profs.each do |prof| %>
+        <% if params[:prof_id].to_s == prof["id"].to_s %>
+          <%= link_to request.parameters.merge({:prof_id => prof["id"]}), class: 'ui button tiny green', style: 'margin-bottom: 10px;' do %>
+            <%= "#{prof["first_name"]} #{prof["last_name"]}" %>
+          <% end %>
+        <% else %>
+          <%= link_to request.parameters.merge({:prof_id => prof["id"]}), class: 'ui button tiny', style: 'margin-bottom: 10px;' do %>
+            <%= "#{prof["first_name"]} #{prof["last_name"]}" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>
+        <em>No professors found on Culpa <i class="em em-disappointed"></i>
+      </p>
+    <% end %>
+
+    <% if !@score_text.blank? && !params[:prof_id].blank? %>
+      <h2 class="ui message <%= @score_color %>" style="margin-top: 5px; font-size: 18px;">
+        <%= @score_text %>
+      </h2>
+    <% elsif @score_text.blank? && !params[:prof_id].blank? %>
+      <br />
+      <p><em>Oops! It seems CULPA doesn't have sufficient data to determine review score.</em></p>
+      <br />
+    <% end %>
+  </div>
 
   <% if !params[:query].blank? && !@instructors.blank? %>
     <table class="ui celled striped teal table">
@@ -114,7 +147,11 @@
       <tbody>
         <% @instructors.each do |instructor| %>
           <tr>
-            <td><%= instructor.name %></td>
+            <td>
+              <%= link_to request.parameters.merge({:query => instructor.name, :prof_id => ''}), style: 'text-decoration: none; background: none' do %>
+                <%= instructor.name %>
+              <% end %>
+            </td>
             <td><%= instructor.course.upcase %></td>
             <td data-sort-value="<%= instructor.range.to_i %>"><%= instructor.range %>%</td>
           </tr>
@@ -153,7 +190,11 @@
     <br />
   </div>
   <% end %>
-  <br /><br /><br />
+  <br /><br />
+
+
+
+  <br />
 
   <% !if params[:query].blank? %>
     <p style="width: 100%; text-align: center; bottom: 12px; color: #555"><em>Initial data courtesy of <a href="http://gradesatcu.com" style="text-decoration: none;">gradesatcu.com</a></em></p>
