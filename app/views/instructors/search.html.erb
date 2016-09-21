@@ -99,39 +99,37 @@
   </center>
   <% end %>
 
-
+  <% if !@culpa_search_profs.blank? %>
   <div class="ui segment">
-    <!-- <%= @culpa_reviews.to_json %> -->
     <h2>Professors on CULPA
       <span style="font-size: 16px; font-weight: 300; color: #888"> &nbsp; matching <%= params[:query] %></span>
     </h2>
-    <% if !@culpa_search_profs.blank? %>
-      <% @culpa_search_profs.each do |prof| %>
-        <% if params[:prof_id].to_s == prof["id"].to_s %>
-          <%= link_to request.parameters.merge({:prof_id => prof["id"]}), class: 'ui button tiny green', style: 'margin-bottom: 10px;' do %>
-            <%= "#{prof["first_name"]} #{prof["last_name"]}" %>
-          <% end %>
-        <% else %>
-          <%= link_to request.parameters.merge({:prof_id => prof["id"]}), class: 'ui button tiny', style: 'margin-bottom: 10px;' do %>
-            <%= "#{prof["first_name"]} #{prof["last_name"]}" %>
-          <% end %>
+    <% @culpa_search_profs.each do |prof| %>
+      <% if params[:prof_id].to_s == prof["id"].to_s %>
+        <%= link_to request.parameters.merge({:prof_id => prof["id"]}), class: 'ui button tiny green', style: 'margin-bottom: 10px;' do %>
+          <%= "#{prof["first_name"]} #{prof["last_name"]}" %>
+        <% end %>
+      <% else %>
+        <%= link_to request.parameters.merge({:prof_id => prof["id"]}), class: 'ui button tiny', style: 'margin-bottom: 10px;' do %>
+          <%= "#{prof["first_name"]} #{prof["last_name"]}" %>
         <% end %>
       <% end %>
-    <% else %>
-      <p>
-        <em>No professors found on Culpa <i class="em em-disappointed"></i>
-      </p>
     <% end %>
+  <% elsif @culpa_search_profs.blank? && !params[:query].blank? %>
+    <p>
+      <em>No professors found on Culpa <i class="em em-disappointed"></i>
+    </p>
+  <% end %>
 
-    <% if !@score_text.blank? && !params[:prof_id].blank? %>
-      <h2 class="ui message <%= @score_color %>" style="margin-top: 5px; font-size: 18px;">
-        <%= @score_text %>
-      </h2>
-    <% elsif @score_text.blank? && !params[:prof_id].blank? %>
-      <br />
-      <p><em>Oops! It seems CULPA doesn't have sufficient data to determine review score.</em></p>
-      <br />
-    <% end %>
+  <% if !@score_text.blank? && !params[:prof_id].blank? %>
+    <h2 class="ui message <%= @score_color %>" style="margin-top: 5px; font-size: 18px;">
+      <%= @score_text %>
+    </h2>
+  <% elsif @score_text.blank? && !params[:prof_id].blank? %>
+    <br />
+    <p><em>Oops! It seems CULPA doesn't have sufficient data to determine review score.</em></p>
+    <br />
+  <% end %>
   </div>
 
   <% if !params[:query].blank? && !@instructors.blank? %>
