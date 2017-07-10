@@ -82,7 +82,7 @@ class InstructorsController < ApplicationController
         res = Net::HTTP.start(url.host, url.port) {|http|
           http.request(req)
         }
-        JSON.parse(res.body)["reviews"].count > 0
+        # JSON.parse(res.body)["reviews"].count > 0
       end
 
       if !params[:prof_id].blank?

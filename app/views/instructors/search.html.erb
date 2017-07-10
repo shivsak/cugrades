@@ -19,6 +19,16 @@
       </div>
     </form>
   </center>
+  <br />
+
+  <% if !params[:query].blank? && params[:query].length < 3 %>
+  <center>
+    <div class="ui warning red message" style="width: 100%; max-width: 600px;">
+      <i class="warning icon large"></i> Please enter 3 or more characters
+    </div>
+  </center>
+  <% end %>
+
   <br /><br />
 
   <% if !params[:query].blank? && !@instructors.blank? %>
@@ -91,14 +101,6 @@
   </div>
   <% end %>
 
-  <% if !params[:query].blank? && params[:query].length < 3 %>
-  <center>
-    <div class="ui warning red message" style="width: 100%; max-width: 600px;">
-      <i class="warning icon large"></i> Please enter 3 or more characters
-    </div>
-  </center>
-  <% end %>
-
   <% if !@culpa_search_profs.blank? %>
     <div class="ui segment">
       <h2>Professors on CULPA
@@ -118,6 +120,7 @@
       <% if !@score_text.blank? && !params[:prof_id].blank? %>
         <h2 class="ui message <%= @score_color %>" style="margin-top: 5px; font-size: 18px;">
           <%= @score_text %>
+          <a style="float:right" href="http://culpa.info/professors/<%= params[:prof_id] %>" class="ui button tiny blue">View Reviews on CULPA</a>
         </h2>
       <% elsif @score_text.blank? && !params[:prof_id].blank? %>
         <br />
